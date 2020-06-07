@@ -1,6 +1,6 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
+
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audio_cache.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 void main() => runApp(BrijApp());
 
@@ -22,9 +22,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  AudioPlayer advancedPlayer;
-  AudioCache player = new AudioCache();
-
+  final AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer();
+  final List<int> array = List<int>.generate(9, (index) => index+1);
   @override
   initState() {
     super.initState();
@@ -33,13 +32,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    advancedPlayer = null;
     super.dispose();
   }
 
-  Future loadMusic() async {
-    advancedPlayer = await AudioCache().loop("assets/two.mp3");
-  }
+  Future loadMusic() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -52,18 +48,34 @@ class _HomePageState extends State<HomePage> {
             itemCount: 1,
             itemBuilder: (context, index) {
               return ListTile(
-                leading: CircleAvatar(child: Text('O')),
-                title: Text('data'),
-                onTap: () => playAudio(),
+                leading: CircleAvatar(child: Text('${array[index]}')),
+                title: Text('Data for - ${array[index]}'),
+                onTap: () => playAudioFromLocalAsset(array[index]),
               );
             },
           ),
         ));
   }
 
-  void playAudio() {
-    const alarmAudioPath = "one.mp3";
-    print('In play audio : $alarmAudioPath');
-    player.play(alarmAudioPath);
+  void playAudioFromLocalAsset(int fileNum) async {
+    print('In playAudioFromLocalAsset audio file : assets/$fileNum.mp3');
+    try {
+      await _assetsAudioPlayer.open(
+        Audio("assets/$fileNum.mp3"),
+      );
+    } catch (t) {
+      print('In playAudioFromLocalAsset ERROR : mp3 unreachable! $t');
+    }
+  }
+
+  void playAudioFromNetWork() async {
+    try {
+      await _assetsAudioPlayer.open(
+        Audio.network(
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"),
+      );
+    } catch (t) {
+      print('In playAudioFromNetWork audio ERROR : mp3 unreachable!');
+    }
   }
 }
