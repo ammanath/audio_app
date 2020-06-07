@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() => runApp(BrijApp());
 
@@ -21,7 +22,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static AudioCache player = new AudioCache();
+  AudioPlayer advancedPlayer;
+  AudioCache player = new AudioCache();
+
+  @override
+  initState() {
+    super.initState();
+    loadMusic();
+  }
+
+  @override
+  void dispose() {
+    advancedPlayer = null;
+    super.dispose();
+  }
+
+  Future loadMusic() async {
+    advancedPlayer = await AudioCache().loop("assets/two.mp3");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
