@@ -22,20 +22,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer();
+  AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer();
   final List<int> array = List<int>.generate(9, (index) => index + 1);
   @override
   initState() {
     super.initState();
-    loadMusic();
   }
 
   @override
   void dispose() {
+    _assetsAudioPlayer.dispose();
     super.dispose();
   }
 
-  Future loadMusic() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +57,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   void playAudioFromLocalAsset(int fileNum) async {
-    fileNum == null ? fileNum = 1 : fileNum++;
+    //fileNum == null ? fileNum = 1 : fileNum++;
     print('In playAudioFromLocalAsset audio file : assets/$fileNum.mp3');
     try {
       await _assetsAudioPlayer.open(
         Audio("assets/$fileNum.mp3"),
       );
-    } catch (t) {
-      print('In playAudioFromLocalAsset ERROR : mp3 unreachable! $t');
+    } catch (t) {print('In playAudioFromLocalAsset ERROR : mp3 unreachable! $t');
+      _assetsAudioPlayer.dispose();
+      _assetsAudioPlayer = AssetsAudioPlayer(); 
+      
     }
   }
 
