@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer();
-  final List<int> array = List<int>.generate(9, (index) => index+1);
+  final List<int> array = List<int>.generate(9, (index) => index + 1);
   @override
   initState() {
     super.initState();
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Container(
           child: ListView.builder(
-            itemCount: 1,
+            itemCount: array.length,
             itemBuilder: (context, index) {
               return ListTile(
                 leading: CircleAvatar(child: Text('${array[index]}')),
@@ -58,6 +58,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void playAudioFromLocalAsset(int fileNum) async {
+    fileNum == null ? fileNum = 1 : fileNum++;
     print('In playAudioFromLocalAsset audio file : assets/$fileNum.mp3');
     try {
       await _assetsAudioPlayer.open(
