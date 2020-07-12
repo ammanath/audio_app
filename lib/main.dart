@@ -1,4 +1,6 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:audio_app/AudioHomePageWidget.dart';
+import 'package:audio_app/SpeechRecognitionWidget.dart';
 
 import 'package:flutter/material.dart';
 
@@ -11,73 +13,37 @@ class BrijApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: HomePage(),
+      home: SpeechRecognitionWidget(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer();
-  final List<int> array = List<int>.generate(9, (index) => index + 1);
-  @override
-  initState() {
-    super.initState();
+class OptionsHomePage extends StatelessWidget {
+  List<String> populateMenus() {
+    return ['Play Audio', 'Audio to Text'];
   }
-
-  @override
-  void dispose() {
-    _assetsAudioPlayer.dispose();
-    super.dispose();
-  }
-
 
   @override
   Widget build(BuildContext context) {
+    List<String> array = populateMenus();
     return Scaffold(
         appBar: AppBar(
-          title: Text('Play Audio'),
+          title: Text('Audio'),
         ),
         body: Container(
           child: ListView.builder(
             itemCount: array.length,
             itemBuilder: (context, index) {
               return ListTile(
-                leading: CircleAvatar(child: Text('${array[index]}')),
-                title: Text('Data for - ${array[index]}'),
-                onTap: () => playAudioFromLocalAsset(array[index]),
+                leading: CircleAvatar(
+                    child: IconButton(
+                        icon: Icon(Icons.ac_unit, color: Colors.white),
+                        onPressed: null)),
+                title: Text('${array[index]}'),
+                onTap: () => {},
               );
             },
           ),
         ));
-  }
-
-  void playAudioFromLocalAsset(int fileNum) async {
-    //fileNum == null ? fileNum = 1 : fileNum++;
-    print('In playAudioFromLocalAsset audio file : assets/$fileNum.mp3');
-    try {
-      await _assetsAudioPlayer.open(
-        Audio("assets/$fileNum.mp3"),
-      );
-    } catch (t) {print('In playAudioFromLocalAsset ERROR : mp3 unreachable! $t');
-      _assetsAudioPlayer.dispose();
-      _assetsAudioPlayer = AssetsAudioPlayer(); 
-      
-    }
-  }
-
-  void playAudioFromNetWork() async {
-    try {
-      await _assetsAudioPlayer.open(
-        Audio.network(
-            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"),
-      );
-    } catch (t) {
-      print('In playAudioFromNetWork audio ERROR : mp3 unreachable!');
-    }
   }
 }

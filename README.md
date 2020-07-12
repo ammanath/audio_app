@@ -14,5 +14,10 @@ Stereo	                ?	    ?	    ✖	    ✓	            ✓
 https://www.soundhelix.com/audio-examples
 
 
+## Speech to text
+AndroidManifest.xml, add : <uses-permission android:name="android.permission.RECORD_AUDIO" />
+For fixing issue around permission: https://github.com/rxlabz/speech_recognition/issues/1
+Tutorial : https://www.youtube.com/watch?v=-rQ_OmPj300
+
 
 

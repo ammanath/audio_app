@@ -21,6 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  simple_permissions: ^0.1.9
+  speech_recognition: ^0.3.0+1
   assets_audio_player: ^2.0.1
   flutter:
     sdk: flutter
