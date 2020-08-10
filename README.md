@@ -19,5 +19,7 @@ AndroidManifest.xml, add : <uses-permission android:name="android.permission.REC
 For fixing issue around permission: https://github.com/rxlabz/speech_recognition/issues/1
 Tutorial : https://www.youtube.com/watch?v=-rQ_OmPj300
 
+Flutter Speech to Text App Tutorial | Voice Recognition (https://www.youtube.com/watch?v=wDWoD1AaLu8&feature=youtu.be) , implemented in class SpeechScreen 
+
 
 

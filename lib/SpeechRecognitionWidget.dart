@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_permissions/simple_permissions.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:speech_recognition/speech_recognition.dart';
 
 class SpeechRecognitionWidget extends StatefulWidget {
@@ -27,10 +27,10 @@ class _SpeechRecognitionWidgetState extends State<SpeechRecognitionWidget> {
   }
 
   void _checkAudioPermission() async {
-    bool hasPermission =
-        await SimplePermissions.checkPermission(Permission.RecordAudio);
-    if (!hasPermission) {
-      await SimplePermissions.requestPermission(Permission.RecordAudio);
+    var status = await Permission.microphone.status;
+    print('The microphone status is $status');
+    if (status.isUndetermined) {
+      print('The microphone status is $status');
     }
   }
 
