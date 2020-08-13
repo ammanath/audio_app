@@ -67,7 +67,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
 
   stt.SpeechToText _speech;
   bool _isListening = false;
-  String _text = 'Press the button and start speaking';
+  String _text = 'Press the button and start speaking!';
   double _confidence = 1.0;
 
   @override
@@ -120,6 +120,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
         onStatus: (val) => print('onStatus: $val'),
         onError: (val) => print('onError: $val'),
       );
+      print('available is $available');
       if (available) {
         setState(() {
           _isListening = true;
